@@ -6,6 +6,7 @@ import App from './App.vue'
 import router from './router'
 import globalPlugin from "./utils/global.js"
 import '@/styles/common.scss'
+import "@/router/permission"
 
 const app = createApp(App)
 
