@@ -8,6 +8,7 @@ import axios from "axios"
 // import Cookies from "js-cookie"
 // import NProgress from "nprogress"
 import { ElMessage } from 'element-plus';
+import router from '@/router';
 import 'element-plus/theme-chalk/el-message.css';
 
 // axios默认配置
@@ -66,6 +67,7 @@ axios.interceptors.response.use(
       setTimeout(() => {
         location.reload()
       }, 3000)
+      router.push('/login');
     }
     return Promise.reject(error.response) // 返回接口返回的错误信息
   })

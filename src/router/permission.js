@@ -8,7 +8,7 @@ router.beforeEach((to, from, next) => {
 
   // if (store.getters.token) {
   //   if (to.path === "/login") {
-  //     next()
+      next()
   //   } else {
   //     if (!store.getters.info.role) {
   //       !(async function getAddRouters() {

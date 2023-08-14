@@ -4,7 +4,7 @@
  * Date: 2022/7/28
  * Description: 文件描述
  */
-import axios from "../axios"
+import axios from "@/utils/axios"
 import userUrls from "../urls/user"
 
 export default {
