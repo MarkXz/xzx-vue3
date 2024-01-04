@@ -1,37 +1,45 @@
-
 <script setup>
 import menuTree from "./menuTree.vue";
+import { useRoute } from "vue-router";
+import { menuStore } from "@/stores/menu.ts";
+import { addRouterStore } from "@/stores/route.ts";
+
+const route = useRoute();
+const isCollapse = menuStore().isCollapse;
+const addRouters = addRouterStore().addRouters;
 </script>
 <template>
-  <!-- <el-aside id="asideNav">
-    <div class="logo-name">
-      <p v-if="$store.getters.logoShow">XI</p>
-      <p v-else>
-        <el-image style="width: 100%;height:100%;vertical-align:middle" :src="require('@/assets/logo.png')"
-          fit="scale-down"></el-image>
-      </p>
-    </div>
-    <el-menu :default-active="$route.path" class="el-menu-vertical" :collapse="$store.getters.isCollapse"
-      background-color="#03152A" text-color="rgba(255,255,255,.7)" active-text-color="#ffffff" router unique-opened
-      collapse-transition>
-      <template v-for="(item, index) in $store.getters.addRouters">
-        <el-submenu v-if="item.children && item.children.length > 0" :index="index + ''" :key="index">
-          <template slot="title">
-            <i :class="item.iconCls"></i>
-            <span slot="title">{{ item.name }}</span>
-          </template>
-
-          <menuTree :menuData="item.children"></menuTree>
-        </el-submenu>
-        <el-menu-item :index="item.path" v-else :key="item.path">
+  <el-menu
+    :default-active="route.path"
+    mode="horizontal"
+    :collapse="isCollapse"
+    background-color="#03152A"
+    text-color="rgba(255,255,255,.7)"
+    active-text-color="#ffffff"
+    router
+    unique-opened
+    collapse-transition
+  >
+    <template v-for="(item, index) in addRouters">
+      <el-sub-menu
+        v-if="item.children && item.children.length > 0"
+        :index="index + ''"
+        :key="index"
+      >
+        <template slot="title">
           <i :class="item.iconCls"></i>
           <span slot="title">{{ item.name }}</span>
-        </el-menu-item>
-      </template>
-    </el-menu>
-  </el-aside> -->
-</template>
+        </template>
 
+        <menuTree :menuData="item.children"></menuTree>
+      </el-sub-menu>
+      <el-menu-item :index="item.path" v-else :key="item.path">
+        <i :class="item.iconCls"></i>
+        <span slot="title">{{ item.name }}</span>
+      </el-menu-item>
+    </template>
+  </el-menu>
+</template>
 
 <style lang="scss">
 $top: top;
@@ -118,7 +126,7 @@ $right: right;
       background-color: #56a9ff !important;
     }
 
-    .is-opened>.el-submenu__title>.el-icon-arrow-down {
+    .is-opened > .el-submenu__title > .el-icon-arrow-down {
       color: #ffffff;
       font-weight: 500;
       font-size: 18px;

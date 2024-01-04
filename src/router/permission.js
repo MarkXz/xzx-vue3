@@ -1,14 +1,16 @@
-import router from "./index"
+import { router } from "./index"
+import { addRouterStore } from "../stores/route"
 // import store from "../store"
-
 
 
 //  获取角色信息，根据用户权限动态加载路由
 router.beforeEach((to, from, next) => {
+  const newRoutes = addRouterStore().newRoutes;
 
   // if (store.getters.token) {
   //   if (to.path === "/login") {
-      next()
+  newRoutes()
+  next()
   //   } else {
   //     if (!store.getters.info.role) {
   //       !(async function getAddRouters() {

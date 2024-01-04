@@ -1,54 +1,57 @@
 <script setup>
-import { ref } from "vue"
+import { SwitchButton } from "@element-plus/icons-vue";
+import { ref } from "vue";
+import Aside from "../aside/aside.vue";
+import { useRouter } from "vue-router";
+// const activeIndex = ref("");
 
-const activeIndex = ref("")
+const router = useRouter();
 
 const collapse = () => {
   // this.$store.dispatch("collapse");
-}
+};
+
 const logout = () => {
-  this.$confirm("确定要退出吗?", "提示", {
+  ElMessageBox.confirm("确定要退出吗?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
-    type: "warning"
+    type: "warning",
   })
     .then(() => {
-      this.$message({
+      ElMessage({
         type: "success",
-        message: "退出成功!"
+        message: "退出成功!",
       });
       sessionStorage.clear();
-      this.$router.push({ path: "/login" });
+      // console.log(this.$router)
+      // this.$router.push("/login" );
+      router.push({ path: "/login" });
     })
     .catch(() => {
-      this.$message({
+      ElMessage({
         type: "info",
-        message: "已取消退出"
+        message: "已取消退出",
       });
     });
-}
-
+};
 </script>
 
 <template>
   <el-header>
     <el-row type="flex" justify="space-between">
-      <el-col>
-        <!-- <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          router
-          mode="horizontal"
-        >
+      <el-col :span="4" class="logo"> 某容器系统 </el-col>
+      <el-col :span="16">
+        <!-- <el-menu :default-active="$route.path" router mode="horizontal">
           <el-menu-item index="/index">首页</el-menu-item>
-          <el-menu-item index="/workList">任务列表</el-menu-item>
-          <el-menu-item index="/profile">当前任务</el-menu-item>
+         
         </el-menu> -->
-        <i class="el-icon-s-fold" @click="collapse"></i>
+        <Aside />
       </el-col>
-      <el-col style="font-size: 15px;text-align:right;">
-        <span style="cursor:pointer;" @click="logout">
-          <i class="el-icon-switch-button"></i>
+      <el-col :span="4">
+        <span class="logout" @click="logout">
+          <el-icon>
+            <SwitchButton />
+          </el-icon>
           <span>退出</span>
         </span>
       </el-col>
@@ -56,8 +59,12 @@ const logout = () => {
   </el-header>
 </template>
 
-
 <style lang="scss">
+.logo{
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 5px;
+}
 .el-header {
   background-color: #545c64;
   color: #fff;
@@ -73,22 +80,29 @@ const logout = () => {
   cursor: pointer;
 }
 
-// .el-menu {
-//   background: transparent;
-//   .el-menu-item {
-//     color: rgba(255, 255, 255, 0.7);
-//     height: 60px;
-//     line-height: 60px;
-//     font-size: 14px;
-//   }
-// }
-// .el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
-// .el-menu--horizontal > .el-menu-item:not(.is-disabled):hover,
-// .el-menu--horizontal > .el-submenu .el-submenu__title:hover {
-//   background: transparent;
-//   color: #fff;
-// }
-// .el-menu--horizontal>.el-menu-item.is-active{
-//   color: #fff;
-// }
+.el-menu {
+  background: transparent;
+  .el-menu-item {
+    color: rgba(255, 255, 255, 0.7);
+    height: 60px;
+    line-height: 60px;
+    font-size: 14px;
+  }
+}
+.el-menu--horizontal > .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal > .el-menu-item:not(.is-disabled):hover,
+.el-menu--horizontal > .el-submenu .el-submenu__title:hover {
+  background: transparent;
+  color: #fff;
+}
+.el-menu--horizontal > .el-menu-item.is-active {
+  color: #fff;
+}
+
+.logout {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
 </style>
